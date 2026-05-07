@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "dev": "tailwindcss -i ./assets/css/input.css -o ./assets/css/output.css --watch"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "axios": "^1.16.0",
+    "tailwindcss": "^4.2.4"
+  }
+}
