@@ -12,32 +12,30 @@
     }
   });
 
-  
-const urlParams = new URLSearchParams(window.location.search);
-const category = urlParams.get("category");
-console.log("Selected category:", category);
-async function getProducts() {
+async function getAllProducts() {
   try {
     const response = await axios.get(
-      `https://dummyjson.com/products/category/${category}`
+      "https://dummyjson.com/products",
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error fetching categories:", error);
     throw error;
   }
 }
-const products = async () => {
+const allProducts = async () => {
   try {
-    const data = await getProducts();
+    const data = await getAllProducts();
+    console.log(data);
     const productList = data.products;
     const total = data.total;
 
     const result = productList.map((product) => {
       const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
-      
+
       return `
-         <a href="assets/pages/productDetails.html?ProductId=${product.id}" class="flex flex-col items-center gap-2 cursor-pointer group">
+         <a href="productDetails.html?ProductId=${product.id}" class="flex flex-col items-center gap-2 cursor-pointer group">
         <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
           ${product.discountPercentage ? `
             <span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded z-10">
@@ -86,11 +84,9 @@ const products = async () => {
     }).join("");
 
     document.querySelector(".products").innerHTML = result;
-    document.querySelector(".Category_Name").textContent = typeof category !== 'undefined' ? category : "Beauty Selection";
     document.querySelector(".total_product").textContent = `Total: ${total} items`;
 
   } catch (error) {
     console.error("Error:", error);
-  }
-};
-products();
+  }};
+allProducts();

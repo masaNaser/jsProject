@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Luxe & Co</title>
-    <link href="./assets/css/output.css" rel="stylesheet" />
+    <title>Category</title>
+    <link href="../css/output.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -14,27 +14,27 @@
     <header class="bg-white shadow-sm sticky top-0 z-50">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
-          <a href="./index.html" class="cursor-pointer">
+          <a href="../../index.html" class="cursor-pointer">
             <h1 class="font-bold text-2xl tracking-tight">LUXE & CO</h1>
           </a>
 
           <nav class="hidden md:block">
             <ul class="flex gap-8 items-center font-medium">
               <li>
-                <a href="./index.html" class="hover:text-primary transition"
+                <a href="../../index.html" class="hover:text-primary transition"
                   >Home</a
                 >
               </li>
               <li>
                 <a
-                  href="./assets/pages/category.html"
+                  href="../pages/category.html"
                   class="hover:text-primary transition"
                   >Category</a
                 >
               </li>
               <li>
                 <a
-                  href="./assets/pages/AllProduct.html"
+                  href="../pages/AllProduct.html"
                   class="hover:text-primary transition"
                   >Product</a
                 >
@@ -80,18 +80,16 @@
             class="flex flex-col gap-4 font-semibold text-center bg-gray-50 p-6 rounded-xl"
           >
             <a
-              href="./index.html"
+              href="../../index.html"
               class="hover:text-primary py-2 border-b border-gray-100"
               >Home</a
             >
             <a
-              href="./assets/pages/category.html"
+              href="../pages/category.html"
               class="hover:text-primary py-2 border-b border-gray-100"
               >Category</a
             >
-            <a
-              href="./assets/pages/AllProduct.html"
-              class="hover:text-primary py-2"
+            <a href="../pages/AllProduct.html" class="hover:text-primary py-2"
               >Product</a
             >
 
@@ -109,56 +107,19 @@
         </div>
       </div>
     </header>
-
     <main>
-      <section>
+      <section class="mt-[30px]">
         <div class="container mx-auto px-4">
-          <div class="flex flex-wrap items-center gap-y-10 py-10">
-            <div class="w-full lg:w-1/2">
-              <span class="text-sm uppercase text-primary tracking-wider"
-                >NEW ARRIVALS 2026</span
-              >
-              <h2 class="text-4xl font-bold mb-4">
-                Discover Products You'll Love
-              </h2>
-              <p class="text-gray-600 mb-6">
-                Experience the next generation of precision commerce. Carefully
-                <br />
-                curated essentials for the modern technophile, delivered with
-                <br />
-                unmatched speed and aesthetic clarity.
-              </p>
-              <a
-                href="./src/Pages/contact/contact.html"
-                class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary-dark transition duration-300"
-                >Shop Now</a
-              >
-            </div>
-            <div class="w-full lg:w-1/2">
-              <img
-                src="./assets/images/hero.jpg"
-                alt="Luxe & Co Banner"
-                class="w-full rounded-md shadow-lg hover:scale-110 transition-transform duration-500"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="mt-24">
-        <div class="container mx-auto px-4">
-          <div class="flex flex-row justify-between items-center">
-            <h2>Shop by Category</h2>
-            <a
-              href="./assets/pages/category.html"
-              class="inline-block text-sm font-semibold bg-primary text-white border-2 border-primary px-6 py-3 rounded-md hover:bg-transparent hover:text-primary transition duration-300"
-              >Explore all categories</a
-            >
-          </div>
-          <div class="category_list flex gap-6 flex-wrap justify-center mt-5">
+          <h2>Shop by Category</h2>
+          <div class="category_list flex gap-6 flex-wrap justify-center">
             <!-- <div class="flex flex-col items-center gap-2 cursor-pointer group">
-              <div class="w-24 h-24 rounded-full border-2 border-gray-200 flex items-center justify-center bg-white group-hover:border-primary group-hover:bg-red-50 transition-all duration-300">
-                <span class="text-xs font-medium text-center px-2 text-gray-700 group-hover:text-primary">Beauty</span>
+              <div
+                class="w-24 h-24 rounded-full border-2 border-gray-200 flex items-center justify-center bg-white group-hover:border-primary group-hover:bg-red-50 transition-all duration-300"
+              >
+                <span
+                  class="text-xs font-medium text-center px-2 text-gray-700 group-hover:text-primary"
+                  >Beauty</span
+                >
               </div>
             </div>
 
@@ -196,7 +157,7 @@
         </p>
       </div>
     </footer>
-    <script src="./node_modules/axios/dist/axios.min.js"></script>
-    <script src="./assets/js/main.js"></script>
+    <script src="../../node_modules/axios/dist/axios.min.js"></script>
+    <script src="../js/main.js"></script>
   </body>
 </html>

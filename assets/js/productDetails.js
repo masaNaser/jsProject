@@ -1,3 +1,17 @@
+  const menuBtn = document.getElementById('menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    
+    if (mobileMenu.classList.contains('hidden')) {
+      menuIcon.classList.replace('fa-xmark', 'fa-bars');
+    } else {
+      menuIcon.classList.replace('fa-bars', 'fa-xmark');
+    }
+  });
+
 const urlparams = new URLSearchParams(window.location.search);
 const productId = urlparams.get("ProductId");
 
@@ -14,7 +28,6 @@ const getProductDetails = async () => {
 const renderProduct = (product) => {
   const container = document.getElementById("product-container");
   
-  // حساب السعر الأصلي قبل الخصم
   const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
 
   container.innerHTML = `
@@ -38,7 +51,7 @@ const renderProduct = (product) => {
       
       <div class="flex items-center gap-4 mb-6">
         <div class="flex items-center text-yellow-400 text-sm">
-          ${'★'.repeat(Math.round(product.rating))}${'☆'.repeat(5 - Math.round(product.rating))}
+          ${'<i class="fa-solid fa-star"></i>'.repeat(Math.round(product.rating))}${'<i class="fa-regular fa-star"></i>'.repeat(5 - Math.round(product.rating))}
           <span class="text-gray-500 ml-2">(${product.rating})</span>
         </div>
         <span class="text-gray-300">|</span>
@@ -95,5 +108,4 @@ const renderProduct = (product) => {
   `;
 };
 
-// تشغيل الدالة عند تحميل الصفحة
 getProductDetails();
