@@ -5,15 +5,18 @@ console.log(searchQuery);
 let currentPage = 1; 
 const limit = 20; 
 
+// في أعلى الملف
+let currentSort = { sortBy: 'price', order: 'asc' };
+
 async function getAllProducts(page) {
   try {
     const skip = (page - 1) * limit;
     let url = "";
 
     if (searchQuery) {
-      url = `https://dummyjson.com/products/search?q=${searchQuery}&limit=${limit}&skip=${skip}`;
+      url = `https://dummyjson.com/products/search?q=${searchQuery}&limit=${limit}&skip=${skip}&sortBy=${currentSort.sortBy}&order=${currentSort.order}`;
     } else {
-      url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+      url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}&sortBy=${currentSort.sortBy}&order=${currentSort.order}`;
     }
 
     const response = await axios.get(url);
@@ -89,7 +92,6 @@ searchInputs.forEach(input => {
                     const currentPath = window.location.pathname;
                     let targetUrl = "";
 
-                    // توجيه ذكي بناءً على الصفحة الحالية
                     if (currentPath.includes("pages/")) {
                         targetUrl = `AllProduct.html?search=${encodeURIComponent(query)}`;
                     } else {
@@ -102,7 +104,6 @@ searchInputs.forEach(input => {
     }
 });
 
-// --- 5. منطق الباجنيشن ---
 function renderPagination(totalItems, page) {
   const totalPages = Math.ceil(totalItems / limit);
   const paginationContainer = document.querySelector(".pagination-controls");
@@ -132,6 +133,12 @@ window.changePage = (newPage) => {
   Products(currentPage);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
-
-// تشغيل الدالة عند تحميل الصفحة
+// في أسفل الملف قبل Products(currentPage)
+document.getElementById('sort-select').addEventListener('change', (e) => {
+    const value = e.target.value; // "price-asc" أو "price-desc"
+    const [sortBy, order] = value.split('-');
+    currentSort = { sortBy, order };
+    currentPage = 1;
+    Products(currentPage);
+});
 Products(currentPage);

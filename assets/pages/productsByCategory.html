@@ -11,7 +11,7 @@
     />
   </head>
   <body>
-     <header class="bg-white shadow-sm sticky top-0 z-50">
+    <header class="bg-white shadow-sm sticky top-0 z-50">
       <div class="container mx-auto px-4">
         <div class="flex justify-between items-center py-4">
           <a href="../../index.html" class="cursor-pointer">
@@ -100,7 +100,7 @@
               class="flex lg:hidden bg-white border p-2 rounded-md items-center mt-2"
             >
               <input
-               id="search-mobile"
+                id="search-mobile"
                 type="text"
                 class="bg-transparent outline-none text-sm w-full"
                 placeholder="Search..."
@@ -112,6 +112,19 @@
       </div>
     </header>
     <main>
+      <section class="mt-5">
+        <div class="mb-6 flex justify-between items-center">
+          <span class="text-sm text-gray-500 total_product"></span>
+
+          <select
+            id="sort-select"
+            class="border border-gray-200 rounded-md px-3 py-2 text-sm text-gray-700 outline-none cursor-pointer hover:border-primary transition"
+          >
+            <option value="price-asc">Highest Price</option>
+            <option value="price-desc">Lowest Price</option>
+          </select>
+        </div>
+      </section>
       <section class="py-8 bg-gray-50">
         <div class="container mx-auto px-4">
           <div class="mb-6">
@@ -121,14 +134,17 @@
             <span class="text-sm text-gray-500 total_product"></span>
           </div>
 
-          <div class="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+          <div
+            class="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+          ></div>
         </div>
       </section>
-      <section>       
-           <div class="pagination-controls flex justify-center items-center gap-2 mt-8 mb-8"></div>
+      <section>
+        <div
+          class="pagination-controls flex justify-center items-center gap-2 mt-8 mb-8"
+        ></div>
       </section>
     </main>
-
 
     <footer class="w-full py-10 border-t border-gray-100 bg-white mt-20">
       <div class="container mx-auto px-4 text-center">
@@ -142,6 +158,5 @@
     <script src="../../node_modules/axios/dist/axios.min.js"></script>
     <script src="../js/products.js"></script>
     <script src="../js/main.js"></script>
-
   </body>
 </html>

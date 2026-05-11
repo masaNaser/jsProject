@@ -4,13 +4,15 @@
   const limit = 20; // عدد المنتجات في كل صفحة
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("category");
+// في أعلى الملف
+let currentSort = { sortBy: 'price', order: 'asc' };
+
 async function getProducts(page) {
   try {
-    let skip=(page - 1) * limit; // حساب العناصر اللي رح نتخطاها
+    let skip = (page - 1) * limit;
     const response = await axios.get(
-      `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
+      `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}&sortBy=${currentSort.sortBy}&order=${currentSort.order}`
     );
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -87,6 +89,10 @@ const products = async (page) => {
 function renderPagination(total, page){
   const totalPages = Math.ceil(total / limit); // حساب عدد الصفحات الكلي
   const paginationContainer = document.querySelector(".pagination-controls");
+    if(totalPages <= 1) {
+    paginationContainer.innerHTML = "";
+    return;
+  }
   let buttonsHtml = "";
   buttonsHtml += `<button class="px-3 py-1 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark'}"
    ${page === 1 ? 'disabled' : ''} onclick="changePage(${page - 1})">Previous</button>`;
@@ -95,11 +101,9 @@ function renderPagination(total, page){
 
   buttonsHtml += `<button class="px-3 py-1 rounded ${page === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark'}"
    ${page === totalPages ? 'disabled' : ''} onclick="changePage(${page + 1})">Next</button>`;
-   if (totalPages <= 1) {
-    buttonsHtml = ""; 
-  }else{
+   
   paginationContainer.innerHTML = buttonsHtml;
-}
+
 }
 window.changePage = (newPage) => {
   // تحديث الصفحة الحالية
@@ -108,4 +112,11 @@ window.changePage = (newPage) => {
   // لما نغير الصفحة رح يرجعنا لفوق عشان نبدأ نشوف المنتجات من أول الصفحة
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
+document.getElementById('sort-select').addEventListener('change', (e) => {
+    const value = e.target.value;
+    const [sortBy, order] = value.split('-');
+    currentSort = { sortBy, order };
+    currentPage = 1;
+    products(currentPage);
+});
 products(currentPage);
