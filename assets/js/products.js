@@ -1,35 +1,25 @@
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
 
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    
-    if (mobileMenu.classList.contains('hidden')) {
-      menuIcon.classList.replace('fa-xmark', 'fa-bars');
-    } else {
-      menuIcon.classList.replace('fa-bars', 'fa-xmark');
-    }
-  });
 
-  
+  let currentPage = 1; // الصفحة الحالية
+  const limit = 20; // عدد المنتجات في كل صفحة
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("category");
-console.log("Selected category:", category);
-async function getProducts() {
+async function getProducts(page) {
   try {
+    let skip=(page - 1) * limit; // حساب العناصر اللي رح نتخطاها
     const response = await axios.get(
-      `https://dummyjson.com/products/category/${category}`
+      `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
   }
 }
-const products = async () => {
+const products = async (page) => {
   try {
-    const data = await getProducts();
+    const data = await getProducts(page);
     const productList = data.products;
     const total = data.total;
 
@@ -88,9 +78,34 @@ const products = async () => {
     document.querySelector(".products").innerHTML = result;
     document.querySelector(".Category_Name").textContent = typeof category !== 'undefined' ? category : "Beauty Selection";
     document.querySelector(".total_product").textContent = `Total: ${total} items`;
-
+    renderPagination(total, page);
   } catch (error) {
     console.error("Error:", error);
   }
 };
-products();
+
+function renderPagination(total, page){
+  const totalPages = Math.ceil(total / limit); // حساب عدد الصفحات الكلي
+  const paginationContainer = document.querySelector(".pagination-controls");
+  let buttonsHtml = "";
+  buttonsHtml += `<button class="px-3 py-1 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark'}"
+   ${page === 1 ? 'disabled' : ''} onclick="changePage(${page - 1})">Previous</button>`;
+
+  buttonsHtml += `<span class="px-4 text-sm">Page ${page} of ${totalPages}</span>`;
+
+  buttonsHtml += `<button class="px-3 py-1 rounded ${page === totalPages ? 'bg-gray-300 cursor-not-allowed' : 'bg-primary text-white hover:bg-primary-dark'}"
+   ${page === totalPages ? 'disabled' : ''} onclick="changePage(${page + 1})">Next</button>`;
+   if (totalPages <= 1) {
+    buttonsHtml = ""; 
+  }else{
+  paginationContainer.innerHTML = buttonsHtml;
+}
+}
+window.changePage = (newPage) => {
+  // تحديث الصفحة الحالية
+  currentPage = newPage;
+  products(currentPage);
+  // لما نغير الصفحة رح يرجعنا لفوق عشان نبدأ نشوف المنتجات من أول الصفحة
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+products(currentPage);

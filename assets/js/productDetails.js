@@ -1,16 +1,3 @@
-  const menuBtn = document.getElementById('menu-btn');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-
-  menuBtn.addEventListener('click', () => {
-    mobileMenu.classList.toggle('hidden');
-    
-    if (mobileMenu.classList.contains('hidden')) {
-      menuIcon.classList.replace('fa-xmark', 'fa-bars');
-    } else {
-      menuIcon.classList.replace('fa-bars', 'fa-xmark');
-    }
-  });
 
 const urlparams = new URLSearchParams(window.location.search);
 const productId = urlparams.get("ProductId");
