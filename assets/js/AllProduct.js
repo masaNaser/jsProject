@@ -12,11 +12,13 @@
     }
   });
 
-async function getAllProducts() {
+   let currentPage = 1; // الصفحة الحالية
+   const limit = 20; // عدد المنتجات في كل صفحة
+async function getAllProducts(page) {
   try {
-    const response = await axios.get(
-      "https://dummyjson.com/products",
-    );
+    const skip = (page - 1) * limit; // حساب العناصر اللي رح نتخطاها 
+        //مثلا بالصفحة الاولى رح يكون السكيب صفر يعني اعرض 20 منتج ما تتخطى اي عنصر
+    const response = await axios.get(`https://dummyjson.com/products?limit=${limit}&skip=${skip}`);
     console.log(response.data);
     return response.data;
   } catch (error) {
@@ -24,9 +26,10 @@ async function getAllProducts() {
     throw error;
   }
 }
-const allProducts = async () => {
+
+const Products = async (page) => {
   try {
-    const data = await getAllProducts();
+    const data = await getAllProducts(page);
     console.log(data);
     const productList = data.products;
     const total = data.total;
@@ -85,8 +88,50 @@ const allProducts = async () => {
 
     document.querySelector(".products").innerHTML = result;
     document.querySelector(".total_product").textContent = `Total: ${total} items`;
-
+    renderPagination(total, page);
   } catch (error) {
     console.error("Error:", error);
   }};
-allProducts();
+
+
+function renderPagination(totalItems, page) {
+  const totalPages = Math.ceil(totalItems / limit); // حساب عدد الصفحات الكلي ,, مثلا عنا 100 منتج و 20 منتج بالصفحة يعني عنا 5 صفحات
+  const paginationContainer = document.querySelector(".pagination-controls");
+  
+  let buttonsHtml = "";
+
+  // زر السابق
+  buttonsHtml += `
+    <button ${page === 1 ? 'disabled' : ''} 
+            onclick="changePage(${page - 1})" 
+            class="px-3 py-1 border rounded ${page === 1 ? 'bg-gray-200' : 'bg-white hover:bg-gray-100'}">
+      Previous
+    </button>
+  `;
+
+  // عرض رقم الصفحة الحالية من إجمالي الصفحات
+  buttonsHtml += `<span class="px-4 text-sm">Page ${page} of ${totalPages}</span>`;
+
+  // زر التالي
+  buttonsHtml += `
+    <button ${page === totalPages ? 'disabled' : ''} 
+            onclick="changePage(${page + 1})" 
+            class="px-3 py-1 border rounded ${page === totalPages ? 'bg-gray-200' : 'bg-white hover:bg-gray-100'}">
+      Next
+    </button>
+  `;
+
+  paginationContainer.innerHTML = buttonsHtml;
+}
+
+window.changePage = (newPage) => {
+  // تحديث الصفحة الحالية
+  currentPage = newPage;
+  Products(currentPage);
+  // لما نغير الصفحة رح يرجعنا لفوق عشان نبدأ نشوف المنتجات من أول الصفحة
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
+
+Products(currentPage);

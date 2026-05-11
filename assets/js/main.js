@@ -25,7 +25,7 @@ const categories = async () => {
         (item) =>
           `
           <div class="flex flex-col items-center gap-2 cursor-pointer group">
-             <a href="assets/pages/productsByCategory.html?category=${item}" class="flex flex-col items-center gap-2">
+             <a href="productsByCategory.html?category=${item}" class="flex flex-col items-center gap-2">
                <div class="w-24 h-24 rounded-full border-2 border-gray-200 flex items-center justify-center bg-white group-hover:border-primary group-hover:bg-red-50 transition-all duration-300">
                  <span class="text-xs font-medium text-center px-2 text-gray-700 group-hover:text-primary capitalize">${item.replace("-", " ")}</span>
                </div>

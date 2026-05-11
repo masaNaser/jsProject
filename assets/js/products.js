@@ -37,7 +37,7 @@ const products = async () => {
       const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
       
       return `
-         <a href="assets/pages/productDetails.html?ProductId=${product.id}" class="flex flex-col items-center gap-2 cursor-pointer group">
+         <a href="productDetails.html?ProductId=${product.id}" class="flex flex-col items-center gap-2 cursor-pointer group">
         <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative">
           ${product.discountPercentage ? `
             <span class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded z-10">
