@@ -1,10 +1,8 @@
 
-
   let currentPage = 1; // الصفحة الحالية
   const limit = 20; // عدد المنتجات في كل صفحة
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("category");
-// في أعلى الملف
 let currentSort = { sortBy: 'price', order: 'asc' };
 
 async function getProducts(page) {

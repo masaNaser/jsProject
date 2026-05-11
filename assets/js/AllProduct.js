@@ -1,3 +1,4 @@
+
 const urlParams = new URLSearchParams(window.location.search);
 let searchQuery = urlParams.get('search') || ""; 
 console.log(searchQuery);
@@ -5,7 +6,6 @@ console.log(searchQuery);
 let currentPage = 1; 
 const limit = 20; 
 
-// في أعلى الملف
 let currentSort = { sortBy: 'price', order: 'asc' };
 
 async function getAllProducts(page) {
