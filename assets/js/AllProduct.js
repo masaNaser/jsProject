@@ -20,6 +20,8 @@ async function getAllProducts(page) {
     }
 
     const response = await axios.get(url);
+    console.log("API Response:", response.data);
+    console.log("order:", currentSort.order);
     return response.data;
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -44,7 +46,7 @@ const Products = async (page) => {
     }
 
     const result = productList.map((product) => {
-      const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
+      const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2); //السعر الاصلي قبل الخصم
       return `
          <a href="productDetails.html?ProductId=${product.id}" class="flex flex-col items-center gap-2 cursor-pointer group">
             <div class="group flex flex-col bg-white border border-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden relative w-full">
@@ -53,7 +55,7 @@ const Products = async (page) => {
                 <img src="${product.thumbnail}" alt="${product.title}" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
               </div>
               <div class="p-3 flex flex-col flex-grow">
-                <p class="text-[10px] text-blue-600 font-bold uppercase mb-1">${product.brand || 'Brand'}</p>
+                <p class="text-[10px] text-blue-600 font-bold uppercase mb-1">${product.brand}</p>
                 <h5 class="text-sm font-semibold text-gray-800 line-clamp-1 mb-1">${product.title}</h5>
                 <div class="mt-auto">
                    <div class="flex items-baseline gap-1">
@@ -83,7 +85,7 @@ const searchInputs = [document.getElementById('search-desktop'), document.getEle
 
 searchInputs.forEach(input => {
     if (input) {
-        if(searchQuery) input.value = searchQuery; // عرض الكلمة المبحوث عنها في الحقل
+        if(searchQuery) input.value = searchQuery;
 
         input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -133,9 +135,8 @@ window.changePage = (newPage) => {
   Products(currentPage);
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
-// في أسفل الملف قبل Products(currentPage)
 document.getElementById('sort-select').addEventListener('change', (e) => {
-    const value = e.target.value; // "price-asc" أو "price-desc"
+    const value = e.target.value;
     const [sortBy, order] = value.split('-');
     currentSort = { sortBy, order };
     currentPage = 1;

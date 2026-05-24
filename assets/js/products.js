@@ -65,7 +65,7 @@ const products = async (page) => {
                  ${product.availabilityStatus}
               </p>
 
-              <button class="w-full cursor-pointer bg-primary hover:opacity-90 text-white text-xs font-bold py-2 rounded transition-colors duration-300">
+              <button class="w-full btn-primary">
                 Add to Cart
               </button>
             </div>

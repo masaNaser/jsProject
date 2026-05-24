@@ -67,13 +67,11 @@ const renderProduct = (product) => {
         </div>
       </div>
 
-      <div class="flex gap-4 mb-10">
-        <button class="flex-1 bg-black text-white py-4 rounded-lg font-bold hover:bg-gray-800 transition-colors uppercase tracking-widest text-sm">
+      <div class="mb-10">
+        <button class="w-full btn-primary">
           Add to Cart
         </button>
-        <button class="flex-1 border-2 border-gray-200 py-4 rounded-lg font-bold hover:border-black transition-colors uppercase tracking-widest text-sm">
-          Buy It Now
-        </button>
+        
       </div>
 
  
