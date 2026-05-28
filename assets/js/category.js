@@ -12,13 +12,22 @@ async function getCategory() {
 }
 
 const categories = async () => {
+   const loader = document.getElementById("loader");
+    const container = document.querySelector(".category_list");
+   loader.classList.remove("hidden");
+   container.innerHTML = "";
   try {
     const category = await getCategory();
+    loader.classList.add("hidden");
     const isHomePage =
     window.location.pathname.endsWith("index.html") ||
     window.location.pathname === "/";
     const displayData = isHomePage ? category.slice(0, 8) : category;
     const path= isHomePage ? "assets/pages/productsByCategory.html?category=" : "productsByCategory.html?category=";
+    if(displayData.length === 0) {
+      container.innerHTML = "<p class='col-span-full text-center text-gray-500'>No categories available.</p>";
+      return;
+    }
     const data = displayData
       .map(
         (item) =>
@@ -34,12 +43,13 @@ const categories = async () => {
       )
       .join("");
 
-    const container = document.querySelector(".category_list");
     if (container) {
       container.innerHTML = data;
     }
   } catch (error) {
     console.error("Error in categories function:", error);
+      loader.classList.add("hidden");
+      container.innerHTML = "<p class='col-span-full text-center text-red-500'>Failed to load categories. Please try again later.</p>";
   }
 };
 

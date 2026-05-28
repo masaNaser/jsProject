@@ -3,18 +3,21 @@ const urlparams = new URLSearchParams(window.location.search);
 const productId = urlparams.get("ProductId");
 
 const getProductDetails = async () => {
+    const loader = document.getElementById("loader");
+    loader.classList.remove("hidden");
   try {
     const response = await axios.get(`https://dummyjson.com/products/${productId}`);
     const product = response.data;
+    loader.classList.add("hidden");
     renderProduct(product);
   } catch (error) {
     console.error("Error:", error);
+    loader.classList.add("hidden");
   }
 };
 
 const renderProduct = (product) => {
   const container = document.getElementById("product-container");
-  
   const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
 
   container.innerHTML = `

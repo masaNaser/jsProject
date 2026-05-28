@@ -18,11 +18,18 @@ async function getProducts(page) {
   }
 }
 const products = async (page) => {
+    const loader = document.getElementById("loader");
+     const container= document.querySelector(".products");
+     container.innerHTML = "";
+    loader.classList.remove("hidden");
   try {
     const data = await getProducts(page);
     const productList = data.products;
     const total = data.total;
-
+    loader.classList.add("hidden");
+    if(productList.length === 0) {
+      container.innerHTML = "<p class='col-span-full text-center text-gray-500'>No products available in this category.</p>";
+    }
     const result = productList.map((product) => {
       const oldPrice = (product.price / (1 - product.discountPercentage / 100)).toFixed(2);
       
@@ -75,12 +82,14 @@ const products = async (page) => {
       `;
     }).join("");
 
-    document.querySelector(".products").innerHTML = result;
+    container.innerHTML = result;
     document.querySelector(".Category_Name").textContent = typeof category !== 'undefined' ? category : "Beauty Selection";
     document.querySelector(".total_product").textContent = `Total: ${total} items`;
     renderPagination(total, page);
   } catch (error) {
     console.error("Error:", error);
+    loader.classList.add("hidden");
+    container.innerHTML = "<p class='col-span-full text-center text-red-500'>Failed to load products. Please try again later.</p>";
   }
 };
 

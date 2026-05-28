@@ -30,13 +30,15 @@ async function getAllProducts(page) {
 }
 
 const Products = async (page) => {
+  const loader = document.getElementById("loader");  
+  const productsContainer = document.querySelector(".products");
+  loader.classList.remove("hidden");
+  productsContainer.innerHTML = ""; 
   try {
-    const productsContainer = document.querySelector(".products");
-    productsContainer.innerHTML = "<p class='col-span-full text-center py-10'>Loading products...</p>";
-    
     const data = await getAllProducts(page);
     const productList = data.products;
     const total = data.total;
+    loader.classList.add("hidden");
 
     if (productList.length === 0) {
         productsContainer.innerHTML = `<p class="col-span-full text-center py-10 text-gray-500">No results found for "${searchQuery}"</p>`;
@@ -76,36 +78,11 @@ const Products = async (page) => {
 
     renderPagination(total, page);
   } catch (error) {
+    loader.classList.add("hidden");
     console.error("Error:", error);
     document.querySelector(".products").innerHTML = "<p class='col-span-full text-center text-red-500'>Error loading products.</p>";
   }
 };
-
-const searchInputs = [document.getElementById('search-desktop'), document.getElementById('search-mobile')];
-
-searchInputs.forEach(input => {
-    if (input) {
-        if(searchQuery) input.value = searchQuery;
-
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const query = e.target.value.trim();
-                if (query) {
-                    const currentPath = window.location.pathname;
-                    let targetUrl = "";
-
-                    if (currentPath.includes("pages/")) {
-                        targetUrl = `AllProduct.html?search=${encodeURIComponent(query)}`;
-                    } else {
-                        targetUrl = `assets/pages/AllProduct.html?search=${encodeURIComponent(query)}`;
-                    }
-                    window.location.href = targetUrl;
-                }
-            }
-        });
-    }
-});
-
 function renderPagination(totalItems, page) {
   const totalPages = Math.ceil(totalItems / limit);
   const paginationContainer = document.querySelector(".pagination-controls");
