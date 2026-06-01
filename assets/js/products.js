@@ -1,6 +1,6 @@
 
-  let currentPage = 1; // الصفحة الحالية
-  const limit = 20; // عدد المنتجات في كل صفحة
+let currentPage = 1; // الصفحة الحالية
+const limit = 20; // عدد المنتجات في كل صفحة
 const urlParams = new URLSearchParams(window.location.search);
 const category = urlParams.get("category");
 let currentSort = { sortBy: 'price', order: 'asc' };
